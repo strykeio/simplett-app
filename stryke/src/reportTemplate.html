@@ -1,0 +1,107 @@
+<html class="">
+
+  <head>
+    <title>Invoice</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+        color: black;
+      }
+
+      .fromtocontent {
+        margin: 10px;
+        margin-right: 15px;
+      }
+
+      .headerSection {
+        border-radius: 3px;
+        min-width: 600px;
+        max-width: 1000px;
+        margin-bottom: 30px;
+      }
+
+      .tableBody {
+        min-width: 600px;
+        max-width: 1000px;
+      }
+
+      .rowHead {
+        background-color: #333940;
+        color: white;
+        padding: 10px;
+        font-size: 1.2rem;
+      }
+
+      th {
+        background-color: #e8e5e5;
+        padding: 7px;
+      }
+
+      td {
+        padding: 7px;
+      }
+
+      table {
+        min-width: 600px;
+        max-width: 1000px;
+        padding: 7px;
+      }
+
+      .item {
+        font-size: x-small;
+        color: black;
+      }
+
+      .totals {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="headerSection">
+      <div class="rowHead">Logs Report</div>
+      <div class="fromtocontent">
+        <div><strong>{{firstname}} {{lastname}}</strong> </div>
+        <div> <strong>From:</strong> {{startdate}} <strong>To:</strong> {{enddate}} </div>
+      </div>
+    </div>
+
+    <div>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th style="width:20%">Project</th>
+            <th style="width:20%">Task</th>
+            <th style="width:15%">Duration</th>
+            <th style="width:20%">Start</th>
+            <th style="width:20%">End</th>
+          </tr>
+        </thead>
+        <tbody>{{#logs}}
+            <tr>
+              <td style="width:20%">{{project}}</td>
+              <td style="width:20%">{{task}}</td>
+              <td style="width:15%">{{attendanceInMinutes}}</td>
+              <td style="width:20%">{{starttime}}</td>
+              <td style="width:20%">{{endtime}}</td>
+            </tr>
+          {{/logs}}
+          <tr class="table-secondary totals">
+            <td style="width:20%"></td>
+            <td style="width:20%"></td>
+            <td style="width:15%">{{totalAttendanceInMinutes}}</td>
+            <td style="width:20%">{{startdate}}</td>
+            <td style="width:20%">{{enddate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </body>
+
+</html>

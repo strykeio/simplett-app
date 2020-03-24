@@ -1,0 +1,492 @@
+{
+    "actions": {
+        "checkInApi": {
+            "actionDescription": "Allows to check in a user from an API call",
+            "actionLabel": "Check In Api",
+            "actionName": "checkInApi",
+            "entityMetadataDefinitionName": null,
+            "returnType": "string",
+            "scriptDefinitionName": "checkInApi",
+            "templateDefinitionName": null,
+            "type": "httpAction"
+        },
+        "checkOutApi": {
+            "actionDescription": "Allows checking out a user from an API call",
+            "actionLabel": "Check Out Api",
+            "actionName": "checkOutApi",
+            "entityMetadataDefinitionName": null,
+            "returnType": "string",
+            "scriptDefinitionName": "checkOutApi",
+            "templateDefinitionName": null,
+            "type": "httpAction"
+        },
+        "checkin": {
+            "actionDescription": "Checks in a user",
+            "actionLabel": "Check In",
+            "actionName": "checkin",
+            "entityMetadataDefinitionName": "userinfo",
+            "returnType": "string",
+            "scriptDefinitionName": "checkin",
+            "templateDefinitionName": null,
+            "type": "buttonAction"
+        },
+        "checkout": {
+            "actionDescription": "Checks out the current user",
+            "actionLabel": "Check Out",
+            "actionName": "checkout",
+            "entityMetadataDefinitionName": "userinfo",
+            "returnType": "string",
+            "scriptDefinitionName": "checkout",
+            "templateDefinitionName": null,
+            "type": "buttonAction"
+        },
+        "generatereport": {
+            "actionDescription": "Generates a report listing all log records and their details in the time interval between the start and end dates of this report record",
+            "actionLabel": "Generate Report",
+            "actionName": "generatereport",
+            "entityMetadataDefinitionName": "report",
+            "returnType": "html",
+            "scriptDefinitionName": "generatereport",
+            "templateDefinitionName": "reportTemplate",
+            "type": "buttonAction"
+        },
+        "getUserStatus": {
+            "actionDescription": "An API call to retrieve the current status of the logged in user (checked in or checked out)",
+            "actionLabel": "Get User Status",
+            "actionName": "getUserStatus",
+            "entityMetadataDefinitionName": null,
+            "returnType": "object",
+            "scriptDefinitionName": "getUserStatus",
+            "templateDefinitionName": null,
+            "type": "httpAction"
+        }
+    },
+    "appInstanceDefinition": {
+        "description": "A simple time tracking app. Track your time against projects and tasks and generate reports.",
+        "name": "simplett",
+        "title": "Simple Time Tracker"
+    },
+    "entityMetadataDefinition": {
+        "log": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "Work log registered by the users",
+            "entityColor": "#5C88C5",
+            "entityIcon": "stopwatch",
+            "entityName": "log",
+            "fields": [
+                {
+                    "label": "Start Date",
+                    "name": "startDate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "label": "End Date",
+                    "name": "endDate",
+                    "required": false,
+                    "type": "date-time"
+                },
+                {
+                    "label": "Project",
+                    "name": "project",
+                    "relatedTo": "project",
+                    "required": false,
+                    "type": "lookup"
+                },
+                {
+                    "label": "User",
+                    "name": "userinfo",
+                    "relatedTo": "userinfo",
+                    "required": true,
+                    "type": "lookup"
+                },
+                {
+                    "label": "Task",
+                    "name": "task",
+                    "relatedTo": "task",
+                    "required": false,
+                    "type": "lookup"
+                }
+            ],
+            "public": false,
+            "title": "Log"
+        },
+        "project": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A project on which users can log their time",
+            "entityColor": "#6FBE42",
+            "entityIcon": "project-diagram",
+            "entityName": "project",
+            "fields": [
+                {
+                    "label": "Name",
+                    "maxLength": 50,
+                    "name": "name",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Client Details",
+                    "maxLength": 500,
+                    "name": "clientdetails",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Description",
+                    "maxLength": 500,
+                    "name": "description",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Project"
+        },
+        "report": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A report to summarise a user's logs for a specific period of time",
+            "entityColor": "#80c643",
+            "entityIcon": "clipboard-list",
+            "entityName": "report",
+            "fields": [
+                {
+                    "label": "start date",
+                    "name": "startdate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "label": "end date",
+                    "name": "enddate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "maxLength": 500,
+                    "name": "description",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Report"
+        },
+        "task": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A task a user has performed for a specific project",
+            "entityColor": "#BD7CB4",
+            "entityIcon": "clipboard",
+            "entityName": "task",
+            "fields": [
+                {
+                    "name": "name",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Task"
+        },
+        "userinfo": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "Additional info for a user of the time tracker",
+            "entityColor": "#5C88C5",
+            "entityIcon": "user",
+            "entityName": "userinfo",
+            "fields": [
+                {
+                    "name": "user",
+                    "relatedTo": "user",
+                    "required": true,
+                    "type": "lookup"
+                },
+                {
+                    "label": "first name",
+                    "maxLength": 50,
+                    "name": "firstname",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "last name",
+                    "maxLength": 50,
+                    "name": "lastname",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "User Info"
+        }
+    },
+    "htmlTemplates": {
+        "reportTemplate": {
+            "templateName": "reportTemplate",
+            "templateSource": "PGh0bWwgY2xhc3M9IiI+PGhlYWQ+PHRpdGxlPkludm9pY2U8L3RpdGxlPjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9zdGFja3BhdGguYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvNC40LjEvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPjxzdHlsZT4KICAgICAgYm9keSB7CiAgICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7CiAgICAgICAgY29sb3I6IGJsYWNrOwogICAgICB9CgogICAgICAuZnJvbXRvY29udGVudCB7CiAgICAgICAgbWFyZ2luOiAxMHB4OwogICAgICAgIG1hcmdpbi1yaWdodDogMTVweDsKICAgICAgfQoKICAgICAgLmhlYWRlclNlY3Rpb24gewogICAgICAgIGJvcmRlci1yYWRpdXM6IDNweDsKICAgICAgICBtaW4td2lkdGg6IDYwMHB4OwogICAgICAgIG1heC13aWR0aDogMTAwMHB4OwogICAgICAgIG1hcmdpbi1ib3R0b206IDMwcHg7CiAgICAgIH0KCiAgICAgIC50YWJsZUJvZHkgewogICAgICAgIG1pbi13aWR0aDogNjAwcHg7CiAgICAgICAgbWF4LXdpZHRoOiAxMDAwcHg7CiAgICAgIH0KCiAgICAgIC5yb3dIZWFkIHsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzMzOTQwOwogICAgICAgIGNvbG9yOiB3aGl0ZTsKICAgICAgICBwYWRkaW5nOiAxMHB4OwogICAgICAgIGZvbnQtc2l6ZTogMS4ycmVtOwogICAgICB9CgogICAgICB0aCB7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2U4ZTVlNTsKICAgICAgICBwYWRkaW5nOiA3cHg7CiAgICAgIH0KCiAgICAgIHRkIHsKICAgICAgICBwYWRkaW5nOiA3cHg7CiAgICAgIH0KCiAgICAgIHRhYmxlIHsKICAgICAgICBtaW4td2lkdGg6IDYwMHB4OwogICAgICAgIG1heC13aWR0aDogMTAwMHB4OwogICAgICAgIHBhZGRpbmc6IDdweDsKICAgICAgfQoKICAgICAgLml0ZW0gewogICAgICAgIGZvbnQtc2l6ZTogeC1zbWFsbDsKICAgICAgICBjb2xvcjogYmxhY2s7CiAgICAgIH0KCiAgICAgIC50b3RhbHMgewogICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkOwogICAgICB9CiAgICA8L3N0eWxlPjwvaGVhZD48Ym9keT4KCiAgICA8ZGl2IGNsYXNzPSJoZWFkZXJTZWN0aW9uIj4KICAgICAgPGRpdiBjbGFzcz0icm93SGVhZCI+TG9ncyBSZXBvcnQ8L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0iZnJvbXRvY29udGVudCI+CiAgICAgICAgPGRpdj48c3Ryb25nPnt7Zmlyc3RuYW1lfX0ge3tsYXN0bmFtZX19PC9zdHJvbmc+IDwvZGl2PgogICAgICAgIDxkaXY+IDxzdHJvbmc+RnJvbTo8L3N0cm9uZz4ge3tzdGFydGRhdGV9fSA8c3Ryb25nPlRvOjwvc3Ryb25nPiB7e2VuZGRhdGV9fSA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KCiAgICA8ZGl2PgogICAgICA8dGFibGUgY2xhc3M9InRhYmxlIj48dGhlYWQgY2xhc3M9InRoZWFkLWRhcmsiPjx0cj48dGggc3R5bGU9IndpZHRoOjIwJSI+UHJvamVjdDwvdGg+PHRoIHN0eWxlPSJ3aWR0aDoyMCUiPlRhc2s8L3RoPjx0aCBzdHlsZT0id2lkdGg6MTUlIj5EdXJhdGlvbjwvdGg+PHRoIHN0eWxlPSJ3aWR0aDoyMCUiPlN0YXJ0PC90aD48dGggc3R5bGU9IndpZHRoOjIwJSI+RW5kPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pnt7I2xvZ3N9fTx0cj48dGQgc3R5bGU9IndpZHRoOjIwJSI+e3twcm9qZWN0fX08L3RkPjx0ZCBzdHlsZT0id2lkdGg6MjAlIj57e3Rhc2t9fTwvdGQ+PHRkIHN0eWxlPSJ3aWR0aDoxNSUiPnt7YXR0ZW5kYW5jZUluTWludXRlc319PC90ZD48dGQgc3R5bGU9IndpZHRoOjIwJSI+e3tzdGFydHRpbWV9fTwvdGQ+PHRkIHN0eWxlPSJ3aWR0aDoyMCUiPnt7ZW5kdGltZX19PC90ZD48L3RyPnt7L2xvZ3N9fTx0ciBjbGFzcz0idGFibGUtc2Vjb25kYXJ5IHRvdGFscyI+PHRkIHN0eWxlPSJ3aWR0aDoyMCUiPjwvdGQ+PHRkIHN0eWxlPSJ3aWR0aDoyMCUiPjwvdGQ+PHRkIHN0eWxlPSJ3aWR0aDoxNSUiPnt7dG90YWxBdHRlbmRhbmNlSW5NaW51dGVzfX08L3RkPjx0ZCBzdHlsZT0id2lkdGg6MjAlIj57e3N0YXJ0ZGF0ZX19PC90ZD48dGQgc3R5bGU9IndpZHRoOjIwJSI+e3tlbmRkYXRlfX08L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPgogICAgPC9kaXY+CgoKICA8L2JvZHk+PC9odG1sPg=="
+        }
+    },
+    "resourcesAccess": [
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "project",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "project",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "task",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "task",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "report",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "report",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "userinfo",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "userinfo",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "log",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "log",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        }
+    ],
+    "scripts": {
+        "checkInApi": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "requestData",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "requestData",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "checkInApi",
+            "scriptResultDefinition": {
+                "returnType": "string",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEFQSSBBY3Rpb24gLSBDaGVjayBpbgogKiBQcm92aWRlcyB0aGUgc2FtZSBmdW5jdGlvbmFsaXR5IG9mIHRoZSBjaGVjayBpbiBidXR0b24sIGJ1dCBjYWxsYWJlbCB2aWEgdGhlIEFQSS4gVW5saWtlIHRoZSBidXR0b24gYWN0aW9uLCAKICogdGhlcmUgd2lsbCBub3QgYmUgYSB1c2VyaW5mbyByZWNvcmQgaW4gY29udGV4dC4gV2Ugd2lsbCBnZXQgdGhlIGxvZ2dlZCBpbiB1c2VyIGFuZCBmaW5kIHRoZSByZWxhdGVkIHVzZXJpbmZvIHJlY29yZAogKiBiZWZvcmUgcGVyZm9ybWluZyB0aGUgY2hlY2sgaW4gbG9naWMuIAogKiAKICogSXQgY2hlY2tzIGlmIGEgbG9nIHJlY29yZCB3aXRob3V0IGFuIGVuZCBkYXRlIGFscmVhZHkgZXhpc3RzIGZvciB0aGlzIHVzZXIgKGllIHRoZSB1c2VyIGlzIGFscmVhZHkgY2hlY2tlZCBpbikuCiAqIElmIG5vdCBpdCBjaGVja3MgdGhlIHVzZXIgaW4gYnkgY3JlYXRpbmcgYSBuZXcgTG9nIHJlY29yZC4gT3RoZXJ3aXNlIGl0IHJldHVybnMgYW4gZXJyb3IuIAogKi8KCmFzeW5jIGZ1bmN0aW9uIGdldFVzZXJJbmZvSWQoKSB7ICAgIAogICAgICAgICAgICAKICAgIHRyeSB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgY29uc3QgdXNlckluZm8gPSBhd2FpdCBzdHJ5a2UuZmluZE9uZShgeyBVc2VyaW5mbyAoZmlsdGVyIDogeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICB1c2VyIDp7IGVxOiAiJHtzdHJ5a2UudXNlci5pZH0iIH0KICAgICAgICAgICAgfSkgewogICAgICAgICAgICAgICAgaWQKICAgICAgICAgICAgfQogICAgICAgIH1gKTsgICAgICAgICAKICAgICAgICByZXR1cm4gIHVzZXJJbmZvLmlkOwogICAgfQogICAgY2F0Y2ggKGVycikgewogICAgICAgIGNvbnNvbGUuZXJyb3IoJ2Vycm9yOiAnICsgZXJyLm1lc3NhZ2UpOwogICAgICAgIHN0cnlrZS5lcnJvcihgRmFpbGVkIHRvIHJldHJpZXZlIHRoZSB1c2VyJ3MgZGV0YWlsc2ApOwogICAgfSAgICAgIAp9Cgphc3luYyBmdW5jdGlvbiBjcmVhdGVMb2dGb3JDaGVja0luKCkgewoKICAgIGNvbnN0IHVzZXJJbmZvSWQgPSBhd2FpdCBnZXRVc2VySW5mb0lkKCk7ICAgIAogICAgCiAgICB0cnkgewoKICAgICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBzdHJ5a2UuZmluZChgeyBMb2cgKGZpbHRlciA6IHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgdXNlcmluZm8gOnsgZXE6ICIke3VzZXJJbmZvSWR9IiB9LAogICAgICAgICAgICAgICAgICAgICAgICBlbmREYXRlIDogeyBpc24gOiBudWxsIH0KICAgICAgICAgICAgICAgICAgICAgICAgfSkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWQKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH1gKTsKCiAgICAgICAgaWYgKHJlc3VsdCAhPT0gbnVsbCAmJiByZXN1bHQubGVuZ3RoID09PSAwKSB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBjb25zdCBuZXdDaGVja2VkSW5Mb2cgPSB7CiAgICAgICAgICAgICAgICAgICAgdXNlcmluZm8gOiB1c2VySW5mb0lkLCAKICAgICAgICAgICAgICAgICAgICBzdGFydERhdGU6IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKQogICAgICAgICAgICAgICAgfSAgCgogICAgICAgICAgICAgICAgc3RyeWtlLmNyZWF0ZSgnbG9nJywgbmV3Q2hlY2tlZEluTG9nKS50aGVuKChyZXNwb25zZURhdGEpID0+IHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICBjb25zb2xlLmxvZygnTG9nIGNyZWF0ZWQgd2l0aCBpZDogJyArIHJlc3BvbnNlRGF0YS5pZCk7CiAgICAgICAgICAgICAgICAgICAgc3RyeWtlLnJlc29sdmUoJ1VzZXIgY2hlY2tlZCBpbiEnKTsKICAgICAgICAgICAgICAgIH0pLmNhdGNoKChlcnIpID0+IHsKICAgICAgICAgICAgICAgICAgICBjb25zb2xlLmxvZygnZmFpbGVkIHRvIGNyZWF0ZSBsb2cgcmVjb3JkIGZvciBjaGVjayBpbjogJysgZXJyLm1lc3NhZ2UpOwogICAgICAgICAgICAgICAgICAgIHN0cnlrZS5lcnJvcignQ291bGQgbm90IGNoZWNrIGluIHVzZXIhJyk7CiAgICAgICAgICAgICAgICB9KTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgICBjb25zb2xlLmxvZygnQ2hlY2tlZCBpbiBsb2cgcmVjb3JkIGFscmVhZHkgZWlzdHM6ICcgKyByZXN1bHRbMF0uaWQpOwogICAgICAgICAgICBzdHJ5a2UuZXJyb3IoJ0NoZWNrIGluIGZhaWxlZCEgVGhlIHVzZXIgaXMgYWxyZWFkeSBjaGVja2VkIGluLicpOwogICAgICAgIH0KICAgIH0gY2F0Y2goZXJyKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1F1ZXJ5IGZvciBleGlzdGluZyBsb2cgZmFpbGVkOiAnICsgcmVzdWx0WzBdLmlkKTsKICAgICAgICBzdHJ5a2UuZXJyb3IoJ0NoZWNrIGluIGZhaWxlZCEgQ291bGQgbm90IGNoZWNrIHdoZXRoZXIgdGhlIHVzZXIgaXMgYWxyZWFkeSBjaGVja2VkIGluLCBwbGVhc2UgdHJ5IGFnYWluLicpOwogICAgfSAgICAKfQoKY3JlYXRlTG9nRm9yQ2hlY2tJbigpOw=="
+        },
+        "checkOutApi": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "requestData",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "requestData",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "checkOutApi",
+            "scriptResultDefinition": {
+                "returnType": "string",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEFQSSBBY3Rpb24gLSBDaGVjayBPdXQKICogUHJvdmlkZXMgdGhlIHNhbWUgZnVuY3Rpb25hbGl0eSBvZiB0aGUgY2hlY2sgb3V0IGJ1dHRvbiwgYnV0IGNhbGxhYmVsIHZpYSB0aGUgQVBJLiBVbmxpa2UgdGhlIGJ1dHRvbiBhY3Rpb24sIAogKiB0aGVyZSB3aWxsIG5vdCBiZSBhIHVzZXJpbmZvIHJlY29yZCBpbiBjb250ZXh0LiBXZSB3aWxsIGdldCB0aGUgbG9nZ2VkIGluIHVzZXIgYW5kIGZpbmQgdGhlIHJlbGF0ZWQgdXNlcmluZm8gcmVjb3JkCiAqIGJlZm9yZSBwZXJmb3JtaW5nIHRoZSBjaGVjayBvdXQgbG9naWMuIAogKiAKICogSXQgY2hlY2tzIGlmIGFuIGFjdGl2ZSBsb2cgcmVjb3JkIHdpdGhvdXQgYW4gZW5kIGRhdGUgYWxyZWFkeSBleGlzdHMgZm9yIHRoaXMgdXNlciAoaWUgdGhlIHVzZXIgaXMgYWxyZWFkeSBjaGVja2VkIGluKS4KICogSWYgaXQgZG9lcywgaXQgY2hlY2tzIHRoZSB1c2VyIG91dCBieSBzZXR0aW5nIHRoZSBlbmQgZGF0ZSB0byBub3cgb24gdGhhdCBMb2cgcmVjb3JkLiBPdGhlcndpc2UgaXQgcmV0dXJucyBhbiBlcnJvci4gCiAqLwoKYXN5bmMgZnVuY3Rpb24gZ2V0VXNlckluZm8oKSB7CiAgICAKICAgIHRyeSB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgY29uc3QgdXNlckluZm8gPSBhd2FpdCBzdHJ5a2UuZmluZE9uZShgeyBVc2VyaW5mbyAoZmlsdGVyIDogeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICB1c2VyIDp7IGVxOiAiJHtzdHJ5a2UudXNlci5pZH0iIH0KICAgICAgICAgICAgfSkgewogICAgICAgICAgICAgICAgaWQsIGZpcnN0bmFtZQogICAgICAgICAgICB9CiAgICAgICAgfWApOyAgICAgICAgIAogICAgICAgIHJldHVybiB1c2VySW5mbzsKICAgIH0KICAgIGNhdGNoIChlcnIpIHsKICAgICAgICBjb25zb2xlLmVycm9yKCdlcnJvcjogJyArIGVyci5tZXNzYWdlKTsKICAgICAgICBzdHJ5a2UuZXJyb3IoYEZhaWxlZCB0byByZXRyaWV2ZSB0aGUgdXNlcidzIGRldGFpbHNgKTsKICAgIH0gIAp9Cgphc3luYyBmdW5jdGlvbiBjaGVja091dCgpIHsKCiAgICBsZXQgdXNlckluZm8gPSBhd2FpdCBnZXRVc2VySW5mbygpOwoKICAgIGNvbnN0IHF1ZXJ5Rm9yQ2hlY2tlZEluTG9ncyA9IGB7ICBMb2cgKGZpbHRlciA6IHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICB1c2VyaW5mbyA6eyBlcTogIiR7dXNlckluZm8uaWR9IiB9LAogICAgICAgIGVuZERhdGUgOiB7IGlzbiA6IG51bGwgfQogICAgICAgIH0pIHsKICAgICAgICAgICAgaWQKICAgICAgICB9CiAgICB9YDsKICAgIAogICAgc3RyeWtlLmZpbmQocXVlcnlGb3JDaGVja2VkSW5Mb2dzKS50aGVuKChyZXN1bHQpID0+IHsKICAgICAgICAgICAgICAgIAogICAgICAgIGlmIChyZXN1bHQgJiYgcmVzdWx0Lmxlbmd0aCA9PT0gMCkgewogICAgICAgICAgICAvLyB1c2VyIG5vdCBjaGVja2VkIGluCiAgICAgICAgICAgIGNvbnNvbGUuZXJyb3IodXNlckluZm8uZmlyc3RuYW1lICsgJyBpcyBub3QgY2hlY2tlZCBpbiEnKTsKICAgICAgICAgICAgc3RyeWtlLmVycm9yKHVzZXJJbmZvLmZpcnN0bmFtZSArICcgaXMgbm90IGNoZWNrZWQgaW4hJyk7CiAgICAgICAgfQogICAgICAgIGVsc2UgaWYgKHJlc3VsdC5sZW5ndGggPT09IDEpIHsKICAgICAgICAgICAgLy8gZWRpdCB0aGUgYWN0aXZlIGxvZwogICAgICAgICAgICBjb25zdCBjdXJyZW50VGltZSA9IG5ldyBEYXRlOwogICAgICAgICAgICBjb25zdCB1cGRhdGVEYXRhID0geyBlbmREYXRlIDogY3VycmVudFRpbWUudG9JU09TdHJpbmcoKSB9OwogICAgICAgICAgICBjb25zdCBsb2dJZCA9IHJlc3VsdFswXS5pZDsKICAgICAgICAgICAgc3RyeWtlLnVwZGF0ZShsb2dJZCwgdXBkYXRlRGF0YSkudGhlbigocmVzcG9uc2VEYXRhKSA9PiB7ICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZygnTG9nIHVwZGF0ZWQuIEVuZCBkYXRlOiAnICsgcmVzcG9uc2VEYXRhLmVuZERhdGUpOwogICAgICAgICAgICAgICAgc3RyeWtlLnJlc29sdmUodXNlckluZm8uZmlyc3RuYW1lICsgJyBjaGVja2VkIG91dCEnKTsKICAgICAgICAgICAgfSkuY2F0Y2goKGVycikgPT4gewogICAgICAgICAgICAgICAgY29uc29sZS5sb2coJ2ZhaWxlZCB0byB1cGRhdGUgbG9nIHJlY29yZCBmb3IgY2hlY2sgb3V0OiAnKyBlcnIubWVzc2FnZSk7CiAgICAgICAgICAgICAgICBzdHJ5a2UuZXJyb3IoJ0NoZWNrIG91dCBmYWlsZWQhICcgKyArIGVyci5tZXNzYWdlKTsKICAgICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICAgIGVsc2UgeyAgICAgICAgICAgIAogICAgICAgICAgICAvLyB1c2VyIGhhcyBtb3JlIHRoYW4gb25lIG9wZW4gbG9nISBlcnJvciEKICAgICAgICAgICAgc3RyeWtlLmVycm9yKHVzZXJJbmZvLmZpcnN0bmFtZSArICcgaGFzIG1hbnkgb3BlbmVkIGxvZyBlbnRyaWVzLiBDb250YWN0IHlvdXIgYWRtaW5pc3RyYXRvciEnKTsgICAgICAgIAogICAgICAgIH0gICAgIAogICAgfSkuY2F0Y2goKGVycikgPT4gewogICAgICAgIGNvbnNvbGUuZXJyb3IoJ0NoZWNrIG91dCBmYWlsZWQ6ICcgKyBlcnIubWVzc2FnZSk7CiAgICAgICAgc3RyeWtlLmVycm9yKCdDaGVjayBvdXQgZmFpbGVkIScpOwogICAgfSk7Cn0KCmNoZWNrT3V0KCk7"
+        },
+        "checkin": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordInContext",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordInContext",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "checkin",
+            "scriptResultDefinition": {
+                "returnType": "string",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEJ1dHRvbiBBY3Rpb24gLSBDaGVjayBpbgogKiBJdCBjaGVja3MgaWYgYSBsb2cgcmVjb3JkIHdpdGhvdXQgYW4gZW5kIGRhdGUgYWxyZWFkeSBleGlzdHMgZm9yIHRoaXMgdXNlciAoaWUgdGhlIHVzZXIgaXMgYWxyZWFkeSBjaGVja2VkIGluKS4KICogSWYgbm90IGl0IGNoZWNrcyB0aGUgdXNlciBpbiBieSBjcmVhdGluZyBhIG5ldyBMb2cgcmVjb3JkLiBPdGhlcndpc2UgaXQgcmV0dXJucyBhbiBlcnJvci4gCiAqLwphc3luYyBmdW5jdGlvbiBjcmVhdGVMb2dGb3JDaGVja0luKCkgewoKICAgIGNvbnN0IHVzZXJJbmZvSWQgPSBzdHJ5a2UuZGF0YS5yZWNvcmQuaWQ7ICAgCiAgICAKICAgIHRyeSB7CgogICAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IHN0cnlrZS5maW5kKGB7IExvZyAoZmlsdGVyIDogeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICB1c2VyaW5mbyA6eyBlcTogIiR7dXNlckluZm9JZH0iIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIGVuZERhdGUgOiB7IGlzbiA6IG51bGwgfQogICAgICAgICAgICAgICAgICAgICAgICB9KSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBpZAogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgfWApOwoKICAgICAgICBpZiAocmVzdWx0ICE9PSBudWxsICYmIHJlc3VsdC5sZW5ndGggPT09IDApIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIGNvbnN0IG5ld0NoZWNrZWRJbkxvZyA9IHsKICAgICAgICAgICAgICAgICAgICB1c2VyaW5mbyA6IHVzZXJJbmZvSWQsIAogICAgICAgICAgICAgICAgICAgIHN0YXJ0RGF0ZTogbmV3IERhdGUoKS50b0lTT1N0cmluZygpCiAgICAgICAgICAgICAgICB9ICAKCiAgICAgICAgICAgICAgICBzdHJ5a2UuY3JlYXRlKCdsb2cnLCBuZXdDaGVja2VkSW5Mb2cpLnRoZW4oKHJlc3BvbnNlRGF0YSkgPT4geyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIGNvbnNvbGUubG9nKCdMb2cgY3JlYXRlZCB3aXRoIGlkOiAnICsgcmVzcG9uc2VEYXRhLmlkKTsKICAgICAgICAgICAgICAgICAgICBzdHJ5a2UucmVzb2x2ZSgnVXNlciBjaGVja2VkIGluIScpOwogICAgICAgICAgICAgICAgfSkuY2F0Y2goKGVycikgPT4gewogICAgICAgICAgICAgICAgICAgIGNvbnNvbGUubG9nKCdmYWlsZWQgdG8gY3JlYXRlIGxvZyByZWNvcmQgZm9yIGNoZWNrIGluOiAnKyBlcnIubWVzc2FnZSk7CiAgICAgICAgICAgICAgICAgICAgc3RyeWtlLmVycm9yKCdDb3VsZCBub3QgY2hlY2sgaW4gdXNlciEnKTsKICAgICAgICAgICAgICAgIH0pOwogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgIGNvbnNvbGUubG9nKCdDaGVja2VkIGluIGxvZyByZWNvcmQgYWxyZWFkeSBlaXN0czogJyArIHJlc3VsdFswXS5pZCk7CiAgICAgICAgICAgIHN0cnlrZS5lcnJvcignQ2hlY2sgaW4gZmFpbGVkISBUaGUgdXNlciBpcyBhbHJlYWR5IGNoZWNrZWQgaW4uJyk7CiAgICAgICAgfQogICAgfSBjYXRjaChlcnIpIHsKICAgICAgICBjb25zb2xlLmxvZygnUXVlcnkgZm9yIGV4aXN0aW5nIGxvZyBmYWlsZWQ6ICcgKyByZXN1bHRbMF0uaWQpOwogICAgICAgIHN0cnlrZS5lcnJvcignQ2hlY2sgaW4gZmFpbGVkISBDb3VsZCBub3QgY2hlY2sgd2hldGhlciB0aGUgdXNlciBpcyBhbHJlYWR5IGNoZWNrZWQgaW4sIHBsZWFzZSB0cnkgYWdhaW4uJyk7CiAgICB9ICAgIAp9CgpjcmVhdGVMb2dGb3JDaGVja0luKCk7"
+        },
+        "checkout": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordInContext",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordInContext",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "checkout",
+            "scriptResultDefinition": {
+                "returnType": "string",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEJ1dHRvbiBBY3Rpb24gLSBDaGVjayBvdXQKICogSXQgY2hlY2tzIGlmIGFuIGFjdGl2ZSBsb2cgcmVjb3JkIHdpdGhvdXQgYW4gZW5kIGRhdGUgYWxyZWFkeSBleGlzdHMgZm9yIHRoaXMgdXNlciAoaWUgdGhlIHVzZXIgaXMgYWxyZWFkeSBjaGVja2VkIGluKS4KICogSWYgaXQgZG9lcywgaXQgY2hlY2tzIHRoZSB1c2VyIG91dCBieSBzZXR0aW5nIHRoZSBlbmQgZGF0ZSB0byBub3cgb24gdGhhdCBMb2cgcmVjb3JkLiBPdGhlcndpc2UgaXQgcmV0dXJucyBhbiBlcnJvci4gCiAqLwpjb25zdCBxdWVyeUZvckNoZWNrZWRJbkxvZ3MgPSBgeyAgTG9nIChmaWx0ZXIgOiB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICB1c2VyaW5mbyA6eyBlcTogIiR7c3RyeWtlLmRhdGEucmVjb3JkLmlkfSIgfSwKICAgIGVuZERhdGUgOiB7IGlzbiA6IG51bGwgfQogICAgfSkgewogICAgICAgIGlkCiAgICB9Cn1gOwoKc3RyeWtlLmZpbmQocXVlcnlGb3JDaGVja2VkSW5Mb2dzKS50aGVuKChyZXN1bHQpID0+IHsKICAgICAgICAKICAgIGNvbnN0IHVzZXJSZWNvcmQgPSBzdHJ5a2UuZGF0YS5yZWNvcmQ7CgogICAgaWYgKHJlc3VsdCAmJiByZXN1bHQubGVuZ3RoID09PSAwKSB7CiAgICAgICAgLy8gdXNlciBub3QgY2hlY2tlZCBpbgogICAgICAgIGNvbnNvbGUuZXJyb3IodXNlclJlY29yZC5maXJzdG5hbWUgKyAnIGlzIG5vdCBjaGVja2VkIGluIScpOwogICAgICAgIHN0cnlrZS5lcnJvcih1c2VyUmVjb3JkLmZpcnN0bmFtZSArICcgaXMgbm90IGNoZWNrZWQgaW4hJyk7CiAgICB9CiAgICBlbHNlIGlmIChyZXN1bHQubGVuZ3RoID09PSAxKSB7CiAgICAgICAgLy8gZWRpdCB0aGUgYWN0aXZlIGxvZwogICAgICAgIGNvbnN0IGN1cnJlbnRUaW1lID0gbmV3IERhdGU7CiAgICAgICAgY29uc3QgdXBkYXRlRGF0YSA9IHsgZW5kRGF0ZSA6IGN1cnJlbnRUaW1lLnRvSVNPU3RyaW5nKCkgfTsKICAgICAgICBjb25zdCBsb2dJZCA9IHJlc3VsdFswXS5pZDsKICAgICAgICBzdHJ5a2UudXBkYXRlKGxvZ0lkLCB1cGRhdGVEYXRhKS50aGVuKChyZXNwb25zZURhdGEpID0+IHsgICAgICAgICAgICAKICAgICAgICAgICAgY29uc29sZS5sb2coJ0xvZyB1cGRhdGVkLiBFbmQgZGF0ZTogJyArIHJlc3BvbnNlRGF0YS5lbmREYXRlKTsKICAgICAgICAgICAgc3RyeWtlLnJlc29sdmUodXNlclJlY29yZC5maXJzdG5hbWUgKyAnIGNoZWNrZWQgb3V0IScpOwogICAgICAgIH0pLmNhdGNoKChlcnIpID0+IHsKICAgICAgICAgICAgY29uc29sZS5sb2coJ2ZhaWxlZCB0byB1cGRhdGUgbG9nIHJlY29yZCBmb3IgY2hlY2sgb3V0OiAnKyBlcnIubWVzc2FnZSk7CiAgICAgICAgICAgIHN0cnlrZS5lcnJvcignQ2hlY2sgb3V0IGZhaWxlZCEgJyArICsgZXJyLm1lc3NhZ2UpOwogICAgICAgIH0pOwogICAgfQogICAgZWxzZSB7ICAgICAgICAgICAgCiAgICAgICAgLy8gdXNlciBoYXMgbW9yZSB0aGFuIG9uZSBvcGVuIGxvZyEgZXJyb3IhCiAgICAgICAgc3RyeWtlLmVycm9yKGZpcnN0bmFtZS5uYW1lICsgJyBoYXMgbWFueSBvcGVuZWQgbG9nIGVudHJpZXMuIENvbnRhY3QgeW91ciBhZG1pbmlzdHJhdG9yIScpOyAgICAgICAgCiAgICB9ICAgICAKfSkuY2F0Y2goKGVycikgPT4gewogICAgY29uc29sZS5lcnJvcignQ2hlY2sgb3V0IGZhaWxlZDogJyArIGVyci5tZXNzYWdlKTsKICAgIHN0cnlrZS5lcnJvcignQ2hlY2sgb3V0IGZhaWxlZCEnKTsKfSk7Cg=="
+        },
+        "generateTestData": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "requestData",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "requestData",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "generateTestData",
+            "scriptResultDefinition": {
+                "returnType": "void",
+                "returnValueName": null
+            },
+            "scriptSource": "Y29uc3QgdXRpbCA9IHJlcXVpcmUoJ3V0aWwnKTsKCmFzeW5jIGZ1bmN0aW9uIGNyZWF0ZUxvZyh1c2VySW5mb0lkLCBzdGFydERhdGUsIGVuZERhdGUsIHRhc2ssIHByb2plY3QpIHsKCiAgICBjb25zdCBuZXdMb2cgPSB7IAogICAgICAgIHVzZXJpbmZvOiB1c2VySW5mb0lkLCAKICAgICAgICBzdGFydERhdGUsIAogICAgICAgIGVuZERhdGUsCiAgICAgICAgdGFzaywgCiAgICAgICAgcHJvamVjdAogICAgfTsKICAgIAogICAgdHJ5IHsKICAgICAgICBjb25zb2xlLmxvZygnQ3JlYXRpbmc6ICcgKyB1dGlsLmluc3BlY3QobmV3TG9nKSk7ICAgICAgICAKICAgICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBzdHJ5a2UuY3JlYXRlKCdsb2cnLCBuZXdMb2cpOwogICAgICAgIGNvbnNvbGUubG9nKCdMb2cgY3JlYXRlZC4gJyArIHV0aWwuaW5zcGVjdChyZXN1bHQuc3RhcnREYXRlKSk7ICAgICAgICAKICAgIH0KICAgIGNhdGNoIChlcnIpIHsKICAgICAgICBjb25zb2xlLmxvZygnZmFpbGVkIHRvIGNyZWF0ZSBsb2cgcmVjb3JkOiAnKyBlcnIubWVzc2FnZSk7CiAgICAgICAgc3RyeWtlLmVycm9yKCdGYWlsZWQgY3JlYXRpbmcgZGF0YSEnKTsKICAgIH0gICAgCn0KCmZ1bmN0aW9uIHJhbmRvbURhdGUoc3RhcnQsIGVuZCkgewogICAgcmV0dXJuIG5ldyBEYXRlKHN0YXJ0LmdldFRpbWUoKSArIE1hdGgucmFuZG9tKCkgKiAoZW5kLmdldFRpbWUoKSAtIHN0YXJ0LmdldFRpbWUoKSkpOwp9CgpmdW5jdGlvbiBnZXRSYW5kb21EYXRlV2l0aFRpbWUoeWVhciwgbW9udGgsIGRheSwgcGFydE9mRGF5KSB7CiAgICBjb25zdCBtb3JuaW5nU3RhcnREYXRlQmVnaW5SYW5nZSA9IG5ldyBEYXRlKHllYXIsIG1vbnRoLCBkYXksIDgsIDApOwogICAgY29uc3QgbW9ybmluZ1N0YXJ0RGF0ZUVuZFJhbmdlID0gbmV3IERhdGUoeWVhciwgbW9udGgsIGRheSwgMTAsIDApOwogICAgY29uc3QgbW9ybmluZ0VuZERhdGVCZWdpblJhbmdlID0gbmV3IERhdGUoeWVhciwgbW9udGgsIGRheSwgMTIsIDApOwogICAgY29uc3QgbW9ybmluZ0VuZERhdGVFbmRSYW5nZSA9IG5ldyBEYXRlKHllYXIsIG1vbnRoLCBkYXksIDE0LCAwKTsKICAgIGNvbnN0IGFmdGVybm9vblN0YXJ0RGF0ZUJlZ2luUmFuZ2UgPSBuZXcgRGF0ZSh5ZWFyLCBtb250aCwgZGF5LCAxNCwgMCk7CiAgICBjb25zdCBhZnRlcm5vb25TdGFydERhdGVFbmRSYW5nZSA9IG5ldyBEYXRlKHllYXIsIG1vbnRoLCBkYXksIDE0LCAzMCk7CiAgICBjb25zdCBhZnRlcm5vb25FbmREYXRlQmVnaW5SYW5nZSA9IG5ldyBEYXRlKHllYXIsIG1vbnRoLCBkYXksIDE4LCAwKTsKICAgIGNvbnN0IGFmdGVybm9vbkVuZERhdGVFbmRSYW5nZSA9IG5ldyBEYXRlKHllYXIsIG1vbnRoLCBkYXksIDE5LCAwKTsKCiAgICBzd2l0Y2ggKHBhcnRPZkRheSkgewogICAgICAgIGNhc2UgMDoKICAgICAgICAgICAgLy8gbW9ybmluZyBzdGFydAogICAgICAgICAgICByZXR1cm4gcmFuZG9tRGF0ZShtb3JuaW5nU3RhcnREYXRlQmVnaW5SYW5nZSwgbW9ybmluZ1N0YXJ0RGF0ZUVuZFJhbmdlKTsKICAgICAgICBjYXNlIDE6CiAgICAgICAgICAgIC8vIG1vcm5pbmcgZW5kCiAgICAgICAgICAgIHJldHVybiByYW5kb21EYXRlKG1vcm5pbmdFbmREYXRlQmVnaW5SYW5nZSwgbW9ybmluZ0VuZERhdGVFbmRSYW5nZSk7CiAgICAgICAgY2FzZSAyOgogICAgICAgICAgICAvLyBhZnRlcm5vb24gc3RhcnQKICAgICAgICAgICAgcmV0dXJuIHJhbmRvbURhdGUoYWZ0ZXJub29uU3RhcnREYXRlQmVnaW5SYW5nZSwgYWZ0ZXJub29uU3RhcnREYXRlRW5kUmFuZ2UpOwogICAgICAgIGNhc2UgMzoKICAgICAgICAgICAgLy8gYWZ0ZXJub29uIGVuZAogICAgICAgICAgICByZXR1cm4gcmFuZG9tRGF0ZShhZnRlcm5vb25FbmREYXRlQmVnaW5SYW5nZSwgYWZ0ZXJub29uRW5kRGF0ZUVuZFJhbmdlKTsKCiAgICB9Cn0KCmZ1bmN0aW9uIGdldFJhbmRvbUVudHJ5KGFycmF5KSB7CiAgICByZXR1cm4gYXJyYXlbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogYXJyYXkubGVuZ3RoKV0KfQoKY29uc3QgdGFza3MgPSBbJzI4OTlkOTM5LTI0YjEtNGY4MS04M2YzLTUzOGJjZDNjYjQ3OScsICc2ZWU4ZTUzNS1hN2VkLTQ2MzktOTc2ZS0zY2NiYzNmYmU1ODInLCAnNGU2ZGZiZjctYThlYy00Nzg4LWIzZGItZGI1NDQ1NDgyMjdmJ107CmNvbnN0IHByb2plY3RzID0gWydkNjlkMTUwZi00MzY5LTRlNjctYjg5ZS0xNDc5MDBmOTk0NmYnLCAnMmFmMzI4MmQtMGNiNi00ODYxLWJmNjgtNTE5NzNlNGZlOTIxJ107CmNvbnN0IHVzZXJJZCA9ICcwNWVlODc5Yi1hY2M1LTRjZDItOWRlMi04YjNlZGRlNDBiOGEnOwpjb25zdCBudW1PZlJlY29yZHMgPSAxODsKY29uc3QgeWVhciA9IDIwMTk7CmNvbnN0IG1vbnRoID0gMTA7Cgpmb3IgKHZhciBpID0gMDsgaSA8IG51bU9mUmVjb3JkczsgaSsrKSB7ICAgIAogICAgY29uc3Qgc3RhcnRUaW1lQW0gPSBnZXRSYW5kb21EYXRlV2l0aFRpbWUoeWVhciwgbW9udGgsIDEraSwgMCk7CiAgICBjb25zdCBlbmRUaW1lQW0gPSBnZXRSYW5kb21EYXRlV2l0aFRpbWUoeWVhciwgbW9udGgsIDEraSwgMSk7CiAgICBjb25zdCB0YXNrQW0gPSBnZXRSYW5kb21FbnRyeSh0YXNrcyk7CiAgICBjb25zdCBwcm9qQW0gPSBnZXRSYW5kb21FbnRyeShwcm9qZWN0cyk7CiAgICBjcmVhdGVMb2codXNlcklkLCBzdGFydFRpbWVBbSwgZW5kVGltZUFtLCB0YXNrQW0sIHByb2pBbSk7CgogICAgY29uc3Qgc3RhcnRUaW1lUG0gPSBnZXRSYW5kb21EYXRlV2l0aFRpbWUoeWVhciwgbW9udGgsIDEraSwgMik7CiAgICBjb25zdCBlbmRUaW1lUG0gPSBnZXRSYW5kb21EYXRlV2l0aFRpbWUoeWVhciwgbW9udGgsIDEraSwgMyk7CiAgICBjb25zdCB0YXNrUG0gPSBnZXRSYW5kb21FbnRyeSh0YXNrcyk7CiAgICBjb25zdCBwcm9qUG0gPSBnZXRSYW5kb21FbnRyeShwcm9qZWN0cyk7CiAgICBjcmVhdGVMb2codXNlcklkLCBzdGFydFRpbWVQbSwgZW5kVGltZVBtLCB0YXNrUG0sIHByb2pQbSk7Cn0KCnN0cnlrZS5yZXNvbHZlKCdEYXRhIGNyZWF0ZWQnKTsK"
+        },
+        "generatereport": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordInContext",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordInContext",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "generatereport",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIFJldHJpZXZlcyBhbGwgbG9nIHJlY29yZHMgZm9yIHRoZSBsb2dnZWQgaW4gdXNlciBpbiB0aGUgdGltZSBwZXJpb2Qgc3BlY2lmaWVkIGJ5IHRoZSBzdGFydCBhbmQgZW5kIGZpZWxkcyBvZgogKiB0aGUgcmVwb3J0IHJlY29yZCBmcm9tIHdoaWNoIHRoaXMgYWN0aW9uIGlzIGNhbGxlZC4gCiAqIAogKiBUaGUgcmVzcG9uc2Ugb2YgdGhpcyBhY3Rpb24gaXMgc3R5bGVkIHVzaW5nIHRoZSByZXBvcnRUZW1wbGF0ZS5odG1sIHRlbXBsYXRlLgogKi8KY29uc3QgbW9tZW50ID0gcmVxdWlyZSgnbW9tZW50Jyk7CgovLyBDbGFzc2VzIGRlZmluaW5nIHRoZSBzdHJ1Y3R1cmUgb2YgdGhlIHJldHVybiBvYmplY3QKY2xhc3MgUmVwb3J0UmVzdWx0IHsKICAgIGNvbnN0cnVjdG9yKHRvdGFsQXR0ZW5kYW5jZUluTWludXRlcywgbG9ncywgZmlyc3RuYW1lLCBsYXN0bmFtZSwgc3RhcnRkYXRlLCBlbmRkYXRlKSB7CiAgICAgICAgdGhpcy5maXJzdG5hbWUgPSBmaXJzdG5hbWU7CiAgICAgICAgdGhpcy5sYXN0bmFtZSA9IGxhc3RuYW1lOwogICAgICAgIHRoaXMuc3RhcnRkYXRlID0gc3RhcnRkYXRlOwogICAgICAgIHRoaXMuZW5kZGF0ZSA9IGVuZGRhdGU7CiAgICAgICAgCiAgICAgICAgdGhpcy50b3RhbEF0dGVuZGFuY2VJbk1pbnV0ZXMgPSB0b3RhbEF0dGVuZGFuY2VJbk1pbnV0ZXM7ICAgICAgICAKICAgICAgICB0aGlzLmxvZ3MgPSBsb2dzOwogICAgfQp9CgpjbGFzcyBBdHRlbmRhbmNlIHsKICAgIGNvbnN0cnVjdG9yKHN0YXJ0dGltZSwgZW5kdGltZSwgYXR0ZW5kYW5jZUluTWludXRlcywgcHJvamVjdCwgdGFzaykgewogICAgICAgIHRoaXMuc3RhcnR0aW1lID0gc3RhcnR0aW1lOwogICAgICAgIHRoaXMuZW5kdGltZSA9IGVuZHRpbWU7CiAgICAgICAgdGhpcy5hdHRlbmRhbmNlSW5NaW51dGVzID0gYXR0ZW5kYW5jZUluTWludXRlczsgICAgICAKICAgICAgICB0aGlzLnByb2plY3QgPSBwcm9qZWN0OwogICAgICAgIHRoaXMudGFzayA9IHRhc2s7ICAKICAgIH0KfQoKLy8gbWFpbiBmdW5jdGlvbiB0aGF0IGdlbmVyYXRlcyB0aGUgcmVwb3J0CmFzeW5jIGZ1bmN0aW9uIGdlbmVyYXRlUmVwb3J0KCkgewogICAgY29uc3QgcmVwb3J0U3RhcnQgPSBzdHJ5a2UuZGF0YS5yZWNvcmQuc3RhcnRkYXRlOwogICAgY29uc3QgcmVwb3J0RW5kID0gc3RyeWtlLmRhdGEucmVjb3JkLmVuZGRhdGU7CiAgICAKICAgIGNvbnN0IHVzZXJJbmZvID0gYXdhaXQgZ2V0VXNlckluZm8oKTsKCiAgICB0cnkgewogICAgICAgIGNvbnNvbGUubG9nKCdyZXBvcnQgc3RhcnQgZGF0ZTogJyArIHJlcG9ydFN0YXJ0KTsKICAgICAgICBjb25zb2xlLmxvZygncmVwb3J0IGVuZCBkYXRlOiAnICsgcmVwb3J0RW5kKTsKICAgICAgICBjb25zdCBhbGxMb2dzRm9yQ3VycmVudE1vbnRoUXVlcnkgPSBgeyAgCiAgICAgICAgICAgIExvZyAoZmlsdGVyIDogewogICAgICAgICAgICAgICAgc3RhcnREYXRlIDogeyBndCA6ICIke3JlcG9ydFN0YXJ0fSIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgbHQgOiAiJHtyZXBvcnRFbmR9In0sCiAgICAgICAgICAgIHVzZXJpbmZvIDogeyBlcSA6ICIke3VzZXJJbmZvLmlkfSIgfQogICAgICAgICAgICB9KSB7CiAgICAgICAgICAgICAgICBpZAogICAgICAgICAgICAgICAgc3RhcnREYXRlCiAgICAgICAgICAgICAgICBlbmREYXRlCiAgICAgICAgICAgICAgICBwcm9qZWN0IHsKICAgICAgICAgICAgICAgICAgICBhbGlhcwogICAgICAgICAgICAgICAgICAgIG5hbWUKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIHRhc2sgewogICAgICAgICAgICAgICAgICAgIGFsaWFzCiAgICAgICAgICAgICAgICAgICAgbmFtZQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgdXNlcmluZm8gewogICAgICAgICAgICAgICAgICAgIGZpcnN0bmFtZSwKICAgICAgICAgICAgICAgICAgICBsYXN0bmFtZQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfWA7CiAgICAKICAgICAgICBjb25zdCBsb2dSZWNvcmRzID0gYXdhaXQgc3RyeWtlLmZpbmQoYWxsTG9nc0ZvckN1cnJlbnRNb250aFF1ZXJ5KTsKICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgIGNvbnN0IHJlcG9ydERhdGEgPSBjYWxjdWxhdGVSZXBvcnREYXRhKGxvZ1JlY29yZHMpOwoKICAgICAgICByZXBvcnREYXRhLmZpcnN0bmFtZSA9IHVzZXJJbmZvLmZpcnN0bmFtZTsKICAgICAgICByZXBvcnREYXRhLmxhc3RuYW1lID0gdXNlckluZm8ubGFzdG5hbWU7CiAgICAgICAgcmVwb3J0RGF0YS5zdGFydGRhdGUgPSBmb3JtYXREYXRlVGltZShyZXBvcnRTdGFydCk7CiAgICAgICAgcmVwb3J0RGF0YS5lbmRkYXRlID0gZm9ybWF0RGF0ZVRpbWUocmVwb3J0RW5kKTsKICAgICAgICAKICAgICAgICBzdHJ5a2UucmVzb2x2ZShyZXBvcnREYXRhKTsgICAgICAgIAogICAgfQogICAgY2F0Y2ggKGVycikgewogICAgICAgIGNvbnNvbGUuZXJyb3IoYEZhaWxlZCB0byBjYWxjdWxhdGUgbW9udGhseSByZXBvcnQ6ICR7ZXJyLm1lc3NhZ2V9YCk7CiAgICAgICAgc3RyeWtlLmVycm9yKCdGYWlsZWQgdG8gY2FsY3VsYXRlIG1vbnRobHkgcmVwb3J0Jyk7CiAgICB9Cn0KCmFzeW5jIGZ1bmN0aW9uIGdldFVzZXJJbmZvKCkgewogICAgCiAgICB0cnkgeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgIGNvbnN0IHVzZXJJbmZvID0gYXdhaXQgc3RyeWtlLmZpbmRPbmUoYHsgVXNlcmluZm8gKGZpbHRlciA6IHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgdXNlciA6eyBlcTogIiR7c3RyeWtlLnVzZXIuaWR9IiB9CiAgICAgICAgICAgIH0pIHsKICAgICAgICAgICAgICAgIGlkLCBmaXJzdG5hbWUsIGxhc3RuYW1lCiAgICAgICAgICAgIH0KICAgICAgICB9YCk7ICAgICAgICAgCiAgICAgICAgcmV0dXJuIHVzZXJJbmZvOwogICAgfQogICAgY2F0Y2ggKGVycikgewogICAgICAgIGNvbnNvbGUuZXJyb3IoJ2Vycm9yOiAnICsgZXJyLm1lc3NhZ2UpOwogICAgICAgIHN0cnlrZS5lcnJvcihgRmFpbGVkIHRvIHJldHJpZXZlIHRoZSB1c2VyJ3MgZGV0YWlsc2ApOwogICAgfSAgCn0KCmZ1bmN0aW9uIGNhbGN1bGF0ZVJlcG9ydERhdGEobG9nc0FycmF5KSB7CiAgICBsZXQgdG90YWxBdHRlbmRhbmNlID0gMDsKICAgIGxldCBhdHRlbmRhbmNlcyA9IFtdOwogICAgZm9yIChsZXQgbG9nIG9mIGxvZ3NBcnJheSkgeyAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgY29uc3QgZHVyYXRpb24gPSBtb21lbnQobG9nLmVuZERhdGUpLmRpZmYobW9tZW50KGxvZy5zdGFydERhdGUpLCAnc2Vjb25kcycpOyAgICAgICAgCiAgICAgICAgY29uc3QgcHJvamVjdCA9IGxvZy5wcm9qZWN0ID8gbG9nLnByb2plY3QuYWxpYXMgOiAnJzsKICAgICAgICBjb25zdCB0YXNrID0gbG9nLnRhc2sgPyBsb2cudGFzay5hbGlhcyA6ICcnOwogICAgICAgIGF0dGVuZGFuY2VzLnB1c2gobmV3IEF0dGVuZGFuY2UoZm9ybWF0RGF0ZVRpbWUobG9nLnN0YXJ0RGF0ZSksIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZm9ybWF0RGF0ZVRpbWUobG9nLmVuZERhdGUpLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZvcm1hdFNlY29uZHMoZHVyYXRpb24pLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHByb2plY3QsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFzaykpOwogICAgICAgIHRvdGFsQXR0ZW5kYW5jZSArPSBkdXJhdGlvbjsgICAgICAgICAgICAgICAgICAKICAgIH0gCiAgIAogICAgcmV0dXJuIG5ldyBSZXBvcnRSZXN1bHQoZm9ybWF0U2Vjb25kcyh0b3RhbEF0dGVuZGFuY2UpLCBhdHRlbmRhbmNlcyk7Cn0KCmZ1bmN0aW9uIGZvcm1hdERhdGVUaW1lKGR0KSB7CiAgICByZXR1cm4gbW9tZW50KGR0KS5mb3JtYXQoJ1lZWVktTU0tREQgSEg6bW06c3MnKSAgICAKfQoKZnVuY3Rpb24gZm9ybWF0U2Vjb25kcyhzZWNvbmRzKSB7CiAgICAvLyBkYXRlIGRvZXMgbm90IG1hdHRlciwgd2UganVzdCB3YW50IHN0YXJ0IG9mIGRheQogICAgcmV0dXJuIG1vbWVudCgiMjAyMC0wMS0wMSIpLnN0YXJ0T2YoJ2RheScpLnNlY29uZHMoc2Vjb25kcykuZm9ybWF0KCdISDptbTpzcycpOyAgICAKfQoKZ2VuZXJhdGVSZXBvcnQoKTs="
+        },
+        "getUserStatus": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "requestData",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "requestData",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "getUserStatus",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEFQSSBBY3Rpb24gLSBHZXQgVXNlciBTdGF0dXMKICogCiAqIFJldHVybnMgd2hldGhlciB0aGUgbG9nZ2VkIGluIHVzZXIgaXMgY3VycmVudGx5IGNoZWNrZWQgaW4gb3IgY2hlY2tlZCBvdXQuIAogKi8KZ2V0VXNlclN0YXR1cygpOwoKYXN5bmMgZnVuY3Rpb24gZ2V0VXNlclN0YXR1cygpIHsKCiAgICBjb25zdCB1c2VySW5mbyA9IGF3YWl0IGdldFVzZXJJbmZvKCk7ICAgICAgICAgICAgCgogICAgdHJ5IHsKICAgICAgICBjb25zdCBjaGVja2VkSW5Mb2dzID0gYXdhaXQgc3RyeWtlLmZpbmQoYHsgTG9nIChmaWx0ZXIgOiB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICB1c2VyaW5mbyA6eyBlcTogIiR7dXNlckluZm8uaWR9IiB9ICAgCiAgICAgICAgICAgICAgICBlbmREYXRlIDogeyBpc24gOiBudWxsIH0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICB9KSB7CiAgICAgICAgICAgICAgICAgICAgaWQsIGFsaWFzLCBzdGFydERhdGUsIGVuZERhdGUsIAogICAgICAgICAgICAgICAgICAgIHByb2plY3QgeyBpZCwgYWxpYXMgfSwKICAgICAgICAgICAgICAgICAgICB0YXNrIHsgaWQsIGFsaWFzIH0sCiAgICAgICAgICAgICAgICAgICAgdXNlcmluZm8geyBpZCwgYWxpYXMgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9YCk7ICAgICAgICAKICAgICAgICBjb25zdCBhY3RpdmVMb2cgPSBjaGVja2VkSW5Mb2dzWzBdOwoKICAgICAgICBjb25zdCByZXNwb25zZSA9IHsKICAgICAgICAgICAgc3RhdHVzOiBhY3RpdmVMb2cgPyAnaW4nIDogJ291dCcsCiAgICAgICAgICAgIHVzZXJJbmZvLAogICAgICAgICAgICBhY3RpdmVMb2cKICAgICAgICB9CgogICAgICAgIGNvbnNvbGUubG9nKCdVc2VyIFNhdHVzOiAnICsgcmVzcG9uc2Uuc3RhdHVzKTsKICAgICAgICBzdHJ5a2UucmVzb2x2ZShyZXNwb25zZSk7CiAgICB9CiAgICBjYXRjaCAoZXJyKSB7CiAgICAgICAgc3RyeWtlLmVycm9yKGBGYWlsZWQgdG8gZ2V0IHRoZSB1c2VyJ3Mgc3RhdHVzYCk7CiAgICB9Cn0KCmFzeW5jIGZ1bmN0aW9uIGdldFVzZXJJbmZvKCkgewogICAgCiAgICB0cnkgeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgIGNvbnN0IHVzZXJJbmZvID0gYXdhaXQgc3RyeWtlLmZpbmRPbmUoYHsgVXNlcmluZm8gKGZpbHRlciA6IHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgdXNlciA6eyBlcTogIiR7c3RyeWtlLnVzZXIuaWR9IiB9CiAgICAgICAgICAgIH0pIHsKICAgICAgICAgICAgICAgIGlkLCBmaXJzdG5hbWUsIGxhc3RuYW1lLCBhbGlhcwogICAgICAgICAgICB9CiAgICAgICAgfWApOyAgICAgICAgIAogICAgICAgIHJldHVybiB1c2VySW5mbzsKICAgIH0KICAgIGNhdGNoIChlcnIpIHsKICAgICAgICBjb25zb2xlLmVycm9yKCdlcnJvcjogJyArIGVyci5tZXNzYWdlKTsKICAgICAgICBzdHJ5a2UuZXJyb3IoYEZhaWxlZCB0byByZXRyaWV2ZSB0aGUgdXNlcidzIGRldGFpbHNgKTsKICAgIH0gIAp9"
+        }
+    },
+    "userRoles": {
+        "admin": {
+            "name": "admin"
+        },
+        "user": {
+            "name": "user"
+        }
+    }
+}
