@@ -39,7 +39,7 @@ It provides:
 - Comms layer with Stryke to perform data retrieve and creation with the auth token
 
 ## How to Use it
-
+ 
 ### Create a Simple Time Tracker app in Stryke
 
 You can use the app template found under: `/stryke/simplett-app.json` to [import the Simple Time Tracker app under your Stryke account](https://docs.stryke.io/docs/appinstance#create-an-app-from-template).
