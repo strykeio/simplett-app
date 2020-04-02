@@ -1,5 +1,7 @@
 # Stryke - Simple Time Tracker App
 
+![simplett](https://strykeassets.fra1.digitaloceanspaces.com/simplett-stryke.png)
+
 This repository contains an example of a Stryke app that works on its own, through the standard Stryke UI, but also with a custom front end (via Stryke's API).
 
 The app is a simple time tracker that allows users to track their time against tasks and projects and to generate styled reports.  
@@ -26,6 +28,8 @@ This app uses the following features of Stryke:
 * The Stryke API allows the custom front end to authenticate with Stryke, and interact with the app (list tasks and projects and edit existing logs) - [**Stryke API**](https://docs.stryke.io/docs/api)
 
 ## Front end
+
+![frontend](https://strykeassets.fra1.digitaloceanspaces.com/simplett-frontend.png)
 
 The front end for the 'simple time tracker' is functionaly and intentionally very basic. It is build using vanilla HTML + CSS + JS, to allow anyone to easily get into it. 
 
